@@ -132,7 +132,7 @@ function newsTemplate({ urlToImage, title, url, description }) {
 	  <div class="col s12">
 		 <div class="card">
 			<div class="card-image">
-			  <img src="${urlToImage}">
+			  <img src="${urlToImage || "img/default-img.png"}">
 			  <span class="card-title">${title || ''}</span>
 			</div>
 			<div class="card-content">
