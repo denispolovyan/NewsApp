@@ -77,18 +77,25 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 const newsService = (function () {
-  const apiKey = "c3191c2bd3d34202b971d8e4d7e05869";
-  const apiUrl = "https://newsapi.org/v2";
+  //   const apiKey = "c3191c2bd3d34202b971d8e4d7e05869";
+  //   const apiUrl = "https://newsapi.org/v2";
+
+  const apiKey = "3e41bc58bc17842da25cc3a6355c47d4";
+  const apiUrl = "https://gnews.io/api/v4";
+  // https://gnews.io/api/v4/search?q=example&apikey=3e41bc58bc17842da25cc3a6355c47d4
+  // url = 'https://gnews.io/api/v4/search?q=example&lang=en&country=us&max=10&apikey=' + apikey; query
+//   url = 'https://gnews.io/api/v4/top-headlines?category=' + category + '&lang=en&country=us&max=10&apikey=' + apikey;
+// url = 'https://gnews.io/api/v4/search?q=example&lang=en&country=us&max=10&apikey=' + apikey;
 
   return {
     topHeadlines(country = "us", category = "sport", cb = onGetResponse) {
       http.get(
-        `${apiUrl}/top-headlines?country=${country}&category=${category}&apiKey=${apiKey}`,
+        `${apiUrl}/top-headlines?category=${category}&lang=en&country=${country}&apikey=${apiKey}`,
         cb
       );
     },
     everything(query = "apple", cb = onGetResponse) {
-      http.get(`${apiUrl}/everything?q=${query}&apiKey=${apiKey}`, cb);
+      http.get(`${apiUrl}/search?q=${query}&lang=en&country=us&max=10&apiKey=${apiKey}`, cb);
     },
   };
 })();
@@ -129,12 +136,12 @@ function renderNews(res) {
   container.insertAdjacentHTML("afterbegin", fragment);
 }
 
-function newsTemplate({ urlToImage, title, url, description }) {
+function newsTemplate({ image = "img/default-img.png", title, url, description }) {
   return `
 	  <div class="col s12">
 		 <div class="card">
 			<div class="card-image">
-			  <img src="${urlToImage || "img/default-img.png"}">
+			  <img src="${image || "img/default-img.png"}">
 			  <span class="card-title">${title || ""}</span>
 			</div>
 			<div class="card-content">
