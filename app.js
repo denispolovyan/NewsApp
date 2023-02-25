@@ -62,6 +62,7 @@ const container = document.querySelector(".grid-container");
 // Find elements
 const countrySelect = document.getElementById("country");
 const categorySelect = document.getElementById("category");
+const langSelect = document.getElementById("lang");
 const searchText = document.querySelector(".search");
 const button = document.querySelector(".search-btn");
 
@@ -77,25 +78,18 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 const newsService = (function () {
-  //   const apiKey = "c3191c2bd3d34202b971d8e4d7e05869";
-  //   const apiUrl = "https://newsapi.org/v2";
-
   const apiKey = "3e41bc58bc17842da25cc3a6355c47d4";
   const apiUrl = "https://gnews.io/api/v4";
-  // https://gnews.io/api/v4/search?q=example&apikey=3e41bc58bc17842da25cc3a6355c47d4
-  // url = 'https://gnews.io/api/v4/search?q=example&lang=en&country=us&max=10&apikey=' + apikey; query
-//   url = 'https://gnews.io/api/v4/top-headlines?category=' + category + '&lang=en&country=us&max=10&apikey=' + apikey;
-// url = 'https://gnews.io/api/v4/search?q=example&lang=en&country=us&max=10&apikey=' + apikey;
 
   return {
-    topHeadlines(country = "us", category = "sport", cb = onGetResponse) {
+    topHeadlines(country = "us", lang = "us", category = "business", cb = onGetResponse) {
       http.get(
-        `${apiUrl}/top-headlines?category=${category}&lang=en&country=${country}&apikey=${apiKey}`,
+		`${apiUrl}/top-headlines?category=${category}&lang=${lang}&country=${country}&max=2&apikey=${apiKey}`,
         cb
       );
     },
     everything(query = "apple", cb = onGetResponse) {
-      http.get(`${apiUrl}/search?q=${query}&lang=en&country=us&max=10&apiKey=${apiKey}`, cb);
+      http.get(`${apiUrl}/search?q=${query}&lang=en&country=us&max=4&apikey=${apiKey}`, cb);
     },
   };
 })();
@@ -109,9 +103,10 @@ function loadNews() {
   const country = countrySelect.value;
   const category = categorySelect.value;
   const search = searchText.value;
+  const lang = langSelect.value;
 
   if (!search) {
-    newsService.topHeadlines(country, category, onGetResponse);
+    newsService.topHeadlines(country, lang, category, onGetResponse);
   } else {
     newsService.everything(search, onGetResponse);
   }
