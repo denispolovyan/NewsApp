@@ -10,8 +10,14 @@
   z-index: 1;
 }
 
-.news-container .grid-container {
+.flex-container {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-auto-flow: dense;
+  display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+}
+
+.maxwidth{
+	max-width: 600px;
+	min-width: 500;
 }

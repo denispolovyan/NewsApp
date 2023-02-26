@@ -57,7 +57,7 @@ function customHttp() {
 const http = customHttp();
 
 // Find container
-const container = document.querySelector(".grid-container");
+const container = document.querySelector(".flex-container");
 
 // Find elements
 const countrySelect = document.getElementById("country");
@@ -84,7 +84,7 @@ const newsService = (function () {
   return {
     topHeadlines(country = "us", lang = "us", category = "business", cb = onGetResponse) {
       http.get(
-		`${apiUrl}/top-headlines?category=${category}&lang=${lang}&country=${country}&max=2&apikey=${apiKey}`,
+		`${apiUrl}/top-headlines?category=${category}&lang=${lang}&country=${country}&max=4&apikey=${apiKey}`,
         cb
       );
     },
@@ -133,7 +133,7 @@ function renderNews(res) {
 
 function newsTemplate({ image = "img/default-img.png", title, url, description }) {
   return `
-	  <div class="col s12">
+	  <div class="col s12 maxwidth">
 		 <div class="card">
 			<div class="card-image">
 			  <img src="${image || "img/default-img.png"}">
