@@ -23,11 +23,21 @@
 } 
 
 .card-image img{
-	max-height: 450px;
+	height: 400px;
 }
 
 @media(max-width: 800px){
 	.card-image img{
-		max-height: 350px;
+		height: 350px;
+	}
+}
+@media(max-width: 500px){
+	.card-image img{
+		height: 250px;
+	}
+}
+@media(max-width: 400px){
+	.card-image img{
+		height: 200px;
 	}
 }
