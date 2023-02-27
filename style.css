@@ -20,4 +20,14 @@
 .maxwidth{
 	max-width: 600px;
 	min-width: 500;
+} 
+
+.card-image img{
+	max-height: 450px;
+}
+
+@media(max-width: 800px){
+	.card-image img{
+		max-height: 350px;
+	}
 }

@@ -23,34 +23,6 @@ function customHttp() {
         cb(error);
       }
     },
-    post(url, body, headers, cb) {
-      try {
-        const xhr = new XMLHttpRequest();
-        xhr.open("POST", url);
-        xhr.addEventListener("load", () => {
-          if (Math.floor(xhr.status / 100) !== 2) {
-            cb(`Error. Status code: ${xhr.status}`, xhr);
-            return;
-          }
-          const response = JSON.parse(xhr.responseText);
-          cb(null, response);
-        });
-
-        xhr.addEventListener("error", () => {
-          cb(`Error. Status code: ${xhr.status}`, xhr);
-        });
-
-        if (headers) {
-          Object.entries(headers).forEach(([key, value]) => {
-            xhr.setRequestHeader(key, value);
-          });
-        }
-
-        xhr.send(JSON.stringify(body));
-      } catch (error) {
-        cb(error);
-      }
-    },
   };
 }
 // Init http module
@@ -71,7 +43,6 @@ button.addEventListener("click", (e) => {
   loadNews();
 });
 
-//  init selects
 document.addEventListener("DOMContentLoaded", function () {
   M.AutoInit();
   loadNews();
@@ -82,21 +53,28 @@ const newsService = (function () {
   const apiUrl = "https://gnews.io/api/v4";
 
   return {
-    topHeadlines(country = "us", lang = "us", category = "business", cb = onGetResponse) {
+    topHeadlines(
+      country = "us",
+      lang = "us",
+      category = "business",
+      cb = onGetResponse
+    ) {
       http.get(
-		`${apiUrl}/top-headlines?category=${category}&lang=${lang}&country=${country}&max=4&apikey=${apiKey}`,
+        `${apiUrl}/top-headlines?category=${category}&lang=${lang}&country=${country}&max=2&apikey=${apiKey}`,
         cb
       );
     },
     everything(query = "apple", cb = onGetResponse) {
-      http.get(`${apiUrl}/search?q=${query}&lang=en&country=us&max=4&apikey=${apiKey}`, cb);
+      http.get(
+        `${apiUrl}/search?q=${query}&lang=en&country=us&max=2&apikey=${apiKey}`,
+        cb
+      );
     },
   };
 })();
 
 document.addEventListener("DOMContentLoaded", function () {
   M.AutoInit();
-  loadNews();
 });
 
 function loadNews() {
@@ -114,6 +92,10 @@ function loadNews() {
 
 function onGetResponse(err, res) {
   if (err || !res.articles.length) {
+    if(err == "Error. Status code: 403"){
+		M.toast({ html: "too much requests, <br> come back tomorrow" });
+		return;
+	 }
     M.toast({ html: "no such news(" }); // error msg
     res.length = 0;
     return;
@@ -131,7 +113,12 @@ function renderNews(res) {
   container.insertAdjacentHTML("afterbegin", fragment);
 }
 
-function newsTemplate({ image = "img/default-img.png", title, url, description }) {
+function newsTemplate({
+  image = "img/default-img.png",
+  title,
+  url,
+  description,
+}) {
   return `
 	  <div class="col s12 maxwidth">
 		 <div class="card">
