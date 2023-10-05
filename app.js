@@ -60,13 +60,13 @@ const newsService = (function () {
       cb = onGetResponse
     ) {
       http.get(
-        `${apiUrl}/top-headlines?category=${category}&lang=${lang}&country=${country}&max=6&apikey=${apiKey}`,
+        `${apiUrl}/top-headlines?category=${category}&lang=${lang}&country=${country}&max=4&apikey=${apiKey}`,
         cb
       );
     },
     everything(query = "apple", cb = onGetResponse) {
       http.get(
-        `${apiUrl}/search?q=${query}&lang=en&country=us&max=6&apikey=${apiKey}`,
+        `${apiUrl}/search?q=${query}&lang=en&country=us&max=4&apikey=${apiKey}`,
         cb
       );
     },

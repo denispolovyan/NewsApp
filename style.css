@@ -1,3 +1,7 @@
+body{
+	background-color: #d6f1fb;
+}
+
 .news-container .card-title {
   background: rgba(0, 0, 0, 0.7);
 }
@@ -26,6 +30,26 @@
 	height: 400px;
 }
 
+.header {
+	display: flex;
+	align-items:center;
+	justify-content: center;
+	height: 90px;
+	background-color: #75bed7;
+	margin-bottom: 20px;
+}
+.header__logo {
+	width: 68%;
+	font-weight: 600;
+	font-size: 36px;
+	color: #fff;
+}
+
+@media(max-width: 992px){
+	.header__logo {
+		width: 83%;
+	}
+}
 @media(max-width: 800px){
 	.card-image img{
 		height: 350px;
